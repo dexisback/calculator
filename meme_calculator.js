@@ -14,9 +14,8 @@ buttons.forEach(button => {
 
       case 'RESULT':
         try {
-          // Replace × with * and ÷ with / if you use symbols
-          const result = eval(expression.replace('x', '*'));
-          expression = result.toString();
+          const result = eval(expression.replace(/x/g, '*').replace(/÷/g, '/'));
+          expression = (Math.round(result * 1000) / 1000).toString();
         } catch (err) {
           expression = 'Error';
         }
@@ -25,14 +24,15 @@ buttons.forEach(button => {
       case 'LOG':
         try {
           const number = parseFloat(expression);
-          expression = Math.log10(number).toString();
+          const logResult = Math.log10(number);
+          expression = (Math.round(logResult * 1000) / 1000).toString();
         } catch {
           expression = 'Error';
         }
         break;
 
       case '?':
-        expression = Math.floor(Math.random() * 100).toString(); // random fun
+        expression = Math.floor(Math.random() * 100).toString();
         break;
 
       case ',':
